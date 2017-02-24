@@ -3,6 +3,9 @@
 To see issue:
 
 ~~~
+git clone git@github.com:blainesch/npm-bork.git
+cd npm-bork
+
 npm install npm
 node install.js
 node test.js
