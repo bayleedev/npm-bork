@@ -1,0 +1,10 @@
+{
+  "name": "npm-bork",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Blaine Schmeisser",
+  "license": "Unlicense",
+  "dependencies": {
+    "mathjs": "^3.9.3"
+  }
+}
