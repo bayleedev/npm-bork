@@ -31,7 +31,6 @@ index 6d91f49..8601b05 100644
 Then run the same commands:
 
 ~~~
-npm install npm
 node install.js
 node test.js
 ~~~
