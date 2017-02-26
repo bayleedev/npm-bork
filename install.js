@@ -1,5 +1,6 @@
 const npm = require('npm')
 const pkg = require('./package.json')
+const {cooldown} = require('./manager')
 
 const dependencies = pkg.dependencies
 const packages = Object.keys(dependencies).map((packageName) => {
@@ -7,7 +8,7 @@ const packageVersion = dependencies[packageName]
   return packageName + '@' + packageVersion
 })
 
-function install () {
+const install = cooldown(() => {
   return new Promise((resolve, reject) => {
     npm.load({ progress: false }, (npmErr) => {
       if (npmErr) return reject(npmErr)
@@ -17,10 +18,19 @@ function install () {
       })
     })
   })
-}
-
-install().then(() => { // First install - installs correctly
-  return install() // Second install - installs incorrectly ]:
-}).catch((e) => {
-  console.log('ugh', e)
+}, () => {
+  Object.keys(require.cache).forEach((file) => {
+    if (file.match(/node_modules.npm/)) {
+      delete require.cache[file]
+    }
+  })
 })
+
+// Install first
+install().then(() => {
+  // Install after
+  install()
+})
+
+// Install while
+install()
